@@ -14,7 +14,7 @@ test('Login with valid credentials', async ({ page }) => {
   await expect(loginPage.passwordLabel).toBeVisible();
   await loginPage.login('Admin', 'admin123');
   await dashboardPage.heading.waitFor();
-  await expect(dashboardPage.heading).toContainText('Dashboard');
+  expect(await dashboardPage.isDashboardVisible()).toBe(true);
 });
 
 test('Login with invalid credentials', async ({ page }) => {

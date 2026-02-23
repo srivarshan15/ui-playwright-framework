@@ -11,11 +11,11 @@ class DashboardPage {
 
   async isDashboardVisible() {
     try {
-      const text = await this.heading.textContent();
-      logger.info(`Dashboard heading text: ${text}`);
-      return text;
+      const visible = await this.heading.isVisible();
+      logger.info(`Dashboard heading visible: ${visible}`);
+      return visible;
     } catch (error) {
-      logger.error(`Error checking dashboard heading: ${error}`);
+      logger.error(`Error checking dashboard heading visibility: ${error}`);
       throw error;
     }
   }
