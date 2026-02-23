@@ -34,6 +34,7 @@ test('Login with invalid credentials', async ({ page }) => {
 test('Login with invalid userName', async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto();
+  await loginPage.companyBranding.waitFor();
   await expect(loginPage.companyBranding).toBeVisible();
   await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
   await expect(page).toHaveTitle('OrangeHRM');
