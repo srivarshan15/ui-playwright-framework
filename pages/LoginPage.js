@@ -1,3 +1,5 @@
+const logger = require('../utils/logger');
+
 class LoginPage {
   constructor(page) {
     this.page = page;
@@ -11,19 +13,39 @@ class LoginPage {
   }
 
   async goto() {
-    await this.page.goto('/');
+    logger.info('Navigating to login page');
+    try {
+      await this.page.goto('/');
+    } catch (error) {
+      logger.error(`Error navigating to login page: ${error}`);
+      throw error;
+    }
   }
 
   async login(username, password) {
-    await this.usernameInput.click();
-    await this.usernameInput.fill(username);
-    await this.passwordInput.click();
-    await this.passwordInput.fill(password);
-    await this.loginButton.click();
+    logger.info(`Attempting login with username: ${username}`);
+    try {
+      await this.usernameInput.click();
+      await this.usernameInput.fill(username);
+      await this.passwordInput.click();
+      await this.passwordInput.fill(password);
+      await this.loginButton.click();
+      logger.info('Login button clicked');
+    } catch (error) {
+      logger.error(`Error during login: ${error}`);
+      throw error;
+    }
   }
 
   async getErrorMessage() {
-    return await this.errorAlert.textContent();
+    try {
+      const errorMsg = await this.errorAlert.textContent();
+      logger.warn(`Login error message: ${errorMsg}`);
+      return errorMsg;
+    } catch (error) {
+      logger.error(`Error retrieving login error message: ${error}`);
+      throw error;
+    }
   }
 }
 

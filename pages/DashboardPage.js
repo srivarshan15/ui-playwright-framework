@@ -1,3 +1,5 @@
+const logger = require('../utils/logger');
+
 class DashboardPage {
   constructor(page) {
     this.page = page;
@@ -6,16 +8,40 @@ class DashboardPage {
     this.dashboardLink = page.getByRole('link', { name: 'Dashboard' });
   }
 
+
   async isDashboardVisible() {
-    return await this.heading.textContent();
+    try {
+      const text = await this.heading.textContent();
+      logger.info(`Dashboard heading text: ${text}`);
+      return text;
+    } catch (error) {
+      logger.error(`Error checking dashboard heading: ${error}`);
+      throw error;
+    }
   }
+
 
   async isDashboardTextVisible() {
-    return await this.dashboardText.isVisible();
+    try {
+      const visible = await this.dashboardText.isVisible();
+      logger.info(`Dashboard text visibility: ${visible}`);
+      return visible;
+    } catch (error) {
+      logger.error(`Error checking dashboard text visibility: ${error}`);
+      throw error;
+    }
   }
 
+
   async isDashboardLinkSelected() {
-    return await this.dashboardLink.isSelected();
+    try {
+      const selected = await this.dashboardLink.isSelected();
+      logger.info(`Dashboard link selected: ${selected}`);
+      return selected;
+    } catch (error) {
+      logger.error(`Error checking dashboard link selection: ${error}`);
+      throw error;
+    }
   }
 }
 
