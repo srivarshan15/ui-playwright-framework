@@ -1,15 +1,11 @@
 const { test, expect } = require('@playwright/test');
 const ApiClient = require('../../api/ApiClient');
+const payloads = require('./testData/payload.json.js');
 
-test('POST /posts - Create new post', async ({ request }) => {
+payloads.forEach((payload) => {
+test(`POST /posts - Create new post - ${payload.title}`, async ({ request }) => {
 
     const api = new ApiClient(request);
-
-    const payload = {
-        title: 'Framework Level',
-        body: 'Reusable API Client',
-        userId: 5
-    };
 
     const response = await api.post('/posts', payload);
 
@@ -22,10 +18,9 @@ test('POST /posts - Create new post', async ({ request }) => {
     expect(responseBody.title).toBe(payload.title);
     expect(responseBody.body).toBe(payload.body);
     expect(responseBody.userId).toBe(payload.userId);
-
-
     expect(responseBody.id).toBeDefined();
 
+});
 });
 
 test('POST /posts - Create new post using ApiClient utilities', async ({ request }) => {

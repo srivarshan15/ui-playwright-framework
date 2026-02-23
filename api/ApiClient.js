@@ -89,6 +89,7 @@ class ApiClient {
       throw new Error('Response is not valid JSON');
     }
   }
+
 }
 
 module.exports = ApiClient;
