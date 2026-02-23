@@ -10,6 +10,7 @@ class LoginPage {
     this.passwordInput = page.getByRole('textbox', { name: 'Password' });
     this.loginButton = page.getByRole('button', { name: 'Login' });
     this.errorAlert = page.getByRole('alert');
+    this.passswordAlert = page.locator('[class*=oxd-input-field-error-message]');
   }
 
   async goto() {
@@ -36,6 +37,31 @@ class LoginPage {
       throw error;
     }
   }
+
+    async enterUserName(username) {
+    logger.info(`Entering username: ${username}`);
+    try {
+      await this.usernameInput.click();
+      await this.usernameInput.fill(username);
+      logger.info('Login button clicked');
+    } catch (error) {
+      logger.error(`Error during login: ${error}`);
+      throw error;
+    }
+  }
+
+   async clickLoginButton() {
+    logger.info(`Clicking login button`);
+    try {
+      await this.loginButton.click();
+      logger.info('Login button clicked');
+    } catch (error) {
+      logger.error(`Error during login: ${error}`);
+      throw error;
+    }
+  }
+
+
 
   async getErrorMessage() {
     try {

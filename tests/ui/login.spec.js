@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-const LoginPage = require('../pages/LoginPage');
-const DashboardPage = require('../pages/DashboardPage');
+const LoginPage = require('../../pages/LoginPage');
+const DashboardPage = require('../../pages/DashboardPage');
 
 test('Login with valid credentials', async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -29,4 +29,16 @@ test('Login with invalid credentials', async ({ page }) => {
   await loginPage.login('wrongName', 'wrongPassword');
   await loginPage.errorAlert.click();
   await expect(loginPage.errorAlert).toContainText('Invalid credentials');
+});
+
+test('Login with invalid userName', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto();
+  await expect(loginPage.companyBranding).toBeVisible();
+  await expect(page).toHaveURL('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+  await expect(page).toHaveTitle('OrangeHRM');
+  await loginPage.companyBranding.waitFor();
+  await loginPage.enterUserName('wrongName');
+  await loginPage.clickLoginButton();
+  await expect(loginPage.passswordAlert).toContainText("Required");
 });
